@@ -39,7 +39,7 @@ No Algoky, você aprenderá sobre:
   
 ## 📈 Porque Esse Projeto?
 
-**Algoky** foi criado com o objetivo de preencher a lacuna de sites educativos interativos que abordam DSA de maneira visual e prática. Ao combinar explicações claras com visualizações e exercícios, o Algoky visa proporcionar uma forma acessível e envolvente de aprender esses conceitos essenciais para qualquer desenvolvedor.
+**Algoky** Alem de ser algo para evolucao propria o **Algoky**, foi criado tambem com o objetivo de preencher a lacuna de sites educativos interativos que abordam DSA de maneira visual e prática. Ao combinar explicações claras com visualizações e exercícios, o Algoky visa proporcionar uma forma acessível e envolvente de aprender esses conceitos essenciais para qualquer desenvolvedor.
 
 Este site não apenas serve como um repositório de conhecimento, mas também como uma plataforma para testes e desafios, permitindo que os usuários se envolvam com os algoritmos e estruturas de dados de forma dinâmica, praticando enquanto aprendem.
 
