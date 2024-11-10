@@ -48,8 +48,8 @@ Este site não apenas serve como um repositório de conhecimento, mas também co
 Se você tiver dúvidas, sugestões ou quiser entrar em contato para mais informações, sinta-se à vontade para me procurar através das seguintes plataformas:
 
 - **GitHub**: [@CaioRenatoDot](https://github.com/CaioRenatoDot)
-- **LinkedIn**: [Caio Renato](https://www.linkedin.com/in/caio-renato-987654321/)
-- **Email**: caiorenato@dominio.com
+- **LinkedIn**: [Caio Renato](https://www.linkedin.com/in/caiorenato)
+- **Email**: caiorenato146@gmail.com
 
 ---
 
