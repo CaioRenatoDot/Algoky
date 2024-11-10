@@ -1,4 +1,5 @@
 # Algoky
+![Algoky Logo](./home/caiorenato/Documents/Devs/Algoky/Algoky/algoky/scr)
 
 **Algoky** é uma plataforma educacional interativa que visa ajudar estudantes e profissionais a aprenderem **Estruturas de Dados e Algoritmos** (DSA). O site foi criado com o objetivo de simplificar a compreensão desses conceitos fundamentais de programação, proporcionando uma forma dinâmica e prática de estudar.
 
