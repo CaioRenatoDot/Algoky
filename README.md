@@ -1,4 +1,4 @@
-# Algoky
+# Algoky 🔢
 ![Algoky](https://github.com/user-attachments/assets/c39d8536-da1e-46d6-b23d-6011989b8fbb)
 
 **Algoky** é uma plataforma educacional interativa que visa ajudar estudantes e profissionais a aprenderem **Estruturas de Dados e Algoritmos** (DSA). O site foi criado com o objetivo de simplificar a compreensão desses conceitos fundamentais de programação, proporcionando uma forma dinâmica e prática de estudar.
