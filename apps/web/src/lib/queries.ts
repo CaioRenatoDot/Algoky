@@ -94,9 +94,10 @@ export function useDashboard() {
 }
 
 /** Progresso indexado por slug. */
-export function useProgress() {
+export function useProgress(enabled = true) {
   return useQuery({
     queryKey: keys.progress,
+    enabled,
     queryFn: async () => {
       const { problems } = await api.get<{ problems: ProblemState[] }>('/api/progress');
       return new Map(problems.map((p) => [p.slug, p]));
