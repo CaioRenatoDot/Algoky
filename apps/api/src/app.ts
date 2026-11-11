@@ -10,6 +10,7 @@ import { ZodError } from 'zod';
 import type { Config } from './config.ts';
 import type { Database } from './db/database.ts';
 import { HttpError } from './lib/errors.ts';
+import { authRoutes } from './routes/auth.ts';
 
 export interface AppContext {
   db: Database;
@@ -80,6 +81,7 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
     return { status: 'ok' };
   });
 
+  await app.register(authRoutes, ctx);
 
   if (config.webDist && existsSync(join(config.webDist, 'index.html'))) {
     await app.register(fastifyStatic, {
