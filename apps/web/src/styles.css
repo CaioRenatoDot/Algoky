@@ -24,6 +24,8 @@
   --accent-hover: #a92c23;
   --accent-soft: #fbe9e6;
   --accent-fg: #ffffff;
+  --accent-solid: #c8372d;
+  --accent-solid-hover: #a92c23;
   --success: #15803d;
   --success-soft: #e3f4e8;
   --warning: #b45309;
@@ -58,6 +60,9 @@
   --accent-hover: #f47466;
   --accent-soft: rgb(239 90 76 / 0.14);
   --accent-fg: #ffffff;
+  /* fundo de botão: mais escuro que o accent de texto para o branco ter contraste */
+  --accent-solid: #c9443a;
+  --accent-solid-hover: #d9554a;
   --success: #4ade80;
   --success-soft: rgb(74 222 128 / 0.12);
   --warning: #fbbf24;
@@ -94,6 +99,8 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
   --color-accent-fg: var(--accent-fg);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-solid-hover: var(--accent-solid-hover);
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
