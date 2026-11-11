@@ -139,3 +139,29 @@ describe('frontend estático', () => {
     await web.close();
   });
 });
+
+describe('backup com rascunhos de código', () => {
+  it('exporta/importa o código e aceita backups antigos sem esses campos', async () => {
+    const a = await registeredClient(t.app, 'hana');
+    await a.patch('/api/progress/two-sum', { code: 'print(1)', codeLanguage: 'python' });
+    const data = (await a.get('/api/me/export')).json();
+    expect(data.problems[0]).toMatchObject({ code: 'print(1)', codeLanguage: 'python' });
+
+    const b = await registeredClient(t.app, 'igor');
+    expect((await b.post('/api/me/import', data)).statusCode).toBe(200);
+    expect((await b.get('/api/progress/two-sum')).json()).toMatchObject({
+      code: 'print(1)',
+      codeLanguage: 'python',
+    });
+
+    const legacy = structuredClone(data);
+    delete legacy.problems[0].code;
+    delete legacy.problems[0].codeLanguage;
+    const c = await registeredClient(t.app, 'joana');
+    expect((await c.post('/api/me/import', legacy)).statusCode).toBe(200);
+    expect((await c.get('/api/progress/two-sum')).json()).toMatchObject({
+      code: '',
+      codeLanguage: null,
+    });
+  });
+});

@@ -33,6 +33,9 @@ export interface ProblemState {
   notes: string;
   confidence: number | null;
   starred: boolean;
+  /** Rascunho de solução escrito na área de trabalho. */
+  code: string;
+  codeLanguage: TemplateLanguage | null;
   firstSolvedAt: string | null;
   updatedAt: string;
   review: ReviewCardDto | null;

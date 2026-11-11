@@ -122,3 +122,31 @@ describe('dashboard', () => {
     expect(tenSolved).toMatchObject({ unlockedAt: null, current: 2, target: 10 });
   });
 });
+
+describe('rascunho de código', () => {
+  it('salva código e linguagem sem mexer no status nem gerar XP', async () => {
+    const code = 'def two_sum(nums, target):\n    seen = {}\n';
+    const res = (
+      await client.patch('/api/progress/two-sum', { code, codeLanguage: 'python' })
+    ).json();
+    expect(res.xpGained).toBe(0);
+    expect(res.data).toMatchObject({ status: 'todo', code, codeLanguage: 'python' });
+    expect((await client.get('/api/progress/two-sum')).json()).toMatchObject({
+      code,
+      codeLanguage: 'python',
+    });
+
+    // Atualizar o status preserva o código.
+    const solved = (await client.patch('/api/progress/two-sum', { status: 'solved' })).json();
+    expect(solved.data).toMatchObject({ status: 'solved', code, codeLanguage: 'python' });
+  });
+
+  it('valida linguagem e tamanho do código', async () => {
+    expect(
+      (await client.patch('/api/progress/two-sum', { codeLanguage: 'cobol' })).statusCode,
+    ).toBe(400);
+    expect(
+      (await client.patch('/api/progress/two-sum', { code: 'x'.repeat(50_001) })).statusCode,
+    ).toBe(400);
+  });
+});

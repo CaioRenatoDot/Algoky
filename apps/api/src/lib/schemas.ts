@@ -60,6 +60,8 @@ export const problemPatchBody = z
     notes: z.string().max(20_000),
     confidence: z.number().int().min(1).max(5).nullable(),
     starred: z.boolean(),
+    code: z.string().max(50_000),
+    codeLanguage: z.enum(TEMPLATE_LANGUAGES).nullable(),
   })
   .partial()
   .strict()

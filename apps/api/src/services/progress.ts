@@ -15,6 +15,7 @@ import {
   type ProblemStatus,
   type ReviewCard,
   type ReviewRating,
+  type TemplateLanguage,
 } from '@algoky/shared';
 import { transaction, type Database } from '../db/database.ts';
 import { badRequest, notFound } from '../lib/errors.ts';
@@ -28,6 +29,8 @@ interface ProblemRow {
   notes: string;
   confidence: number | null;
   starred: number;
+  code: string;
+  code_language: TemplateLanguage | null;
   first_solved_at: string | null;
   updated_at: string;
   ease: number | null;
@@ -38,7 +41,7 @@ interface ProblemRow {
 }
 
 const SELECT_STATE = `
-  SELECT p.slug, p.status, p.notes, p.confidence, p.starred, p.first_solved_at, p.updated_at,
+  SELECT p.slug, p.status, p.notes, p.confidence, p.starred, p.code, p.code_language, p.first_solved_at, p.updated_at,
          r.ease, r.interval_days, r.repetitions, r.due_date, r.last_reviewed_at
   FROM user_problems p
   LEFT JOIN review_cards r ON r.user_id = p.user_id AND r.slug = p.slug
@@ -51,6 +54,8 @@ function toState(r: ProblemRow): ProblemState {
     notes: r.notes,
     confidence: r.confidence,
     starred: r.starred === 1,
+    code: r.code,
+    codeLanguage: r.code_language,
     firstSolvedAt: r.first_solved_at,
     updatedAt: r.updated_at,
     review:
@@ -134,6 +139,8 @@ export interface ProblemPatch {
   notes?: string;
   confidence?: number | null;
   starred?: boolean;
+  code?: string;
+  codeLanguage?: TemplateLanguage | null;
 }
 
 export interface MutationResult<T> {
@@ -196,11 +203,12 @@ export function updateProblem(
     }
 
     db.prepare(
-      `INSERT INTO user_problems (user_id, slug, status, notes, confidence, starred, first_solved_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `INSERT INTO user_problems (user_id, slug, status, notes, confidence, starred, code, code_language, first_solved_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT (user_id, slug) DO UPDATE SET
          status = excluded.status, notes = excluded.notes, confidence = excluded.confidence,
-         starred = excluded.starred, first_solved_at = excluded.first_solved_at, updated_at = excluded.updated_at`,
+         starred = excluded.starred, code = excluded.code, code_language = excluded.code_language,
+         first_solved_at = excluded.first_solved_at, updated_at = excluded.updated_at`,
     ).run(
       user.id,
       slug,
@@ -208,6 +216,8 @@ export function updateProblem(
       patch.notes ?? current?.notes ?? '',
       confidence,
       (patch.starred ?? current?.starred ?? false) ? 1 : 0,
+      patch.code ?? current?.code ?? '',
+      patch.codeLanguage !== undefined ? patch.codeLanguage : (current?.codeLanguage ?? null),
       firstSolvedAt,
       nowIso,
     );

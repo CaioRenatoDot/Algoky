@@ -68,4 +68,8 @@ export const MIGRATIONS: string[] = [
     PRIMARY KEY (user_id, code)
   );
   `,
+  /* 2: rascunho de código por problema (área de trabalho) */ `
+  ALTER TABLE user_problems ADD COLUMN code TEXT NOT NULL DEFAULT '';
+  ALTER TABLE user_problems ADD COLUMN code_language TEXT CHECK (code_language IN ('python', 'typescript', 'java'));
+  `,
 ];

@@ -26,6 +26,9 @@ export const exportSchema = z.object({
         notes: z.string().max(20_000),
         confidence: z.number().int().min(1).max(5).nullable(),
         starred: z.boolean(),
+        // Opcionais: backups anteriores à área de trabalho não têm estes campos.
+        code: z.string().max(50_000).default(''),
+        codeLanguage: z.enum(TEMPLATE_LANGUAGES).nullable().default(null),
         firstSolvedAt: isoInstant.nullable(),
         updatedAt: isoInstant,
       }),
@@ -79,16 +82,20 @@ export function exportUserData(db: Database, user: User, now = new Date()): Expo
       notes: string;
       confidence: number | null;
       starred: number;
+      code: string;
+      code_language: ExportData['problems'][number]['codeLanguage'];
       first_solved_at: string | null;
       updated_at: string;
     }>(
-      'SELECT slug, status, notes, confidence, starred, first_solved_at, updated_at FROM user_problems WHERE user_id = ? ORDER BY slug',
+      'SELECT slug, status, notes, confidence, starred, code, code_language, first_solved_at, updated_at FROM user_problems WHERE user_id = ? ORDER BY slug',
     ).map((r) => ({
       slug: r.slug,
       status: r.status,
       notes: r.notes,
       confidence: r.confidence,
       starred: r.starred === 1,
+      code: r.code,
+      codeLanguage: r.code_language,
       firstSolvedAt: r.first_solved_at,
       updatedAt: r.updated_at,
     })),
@@ -146,7 +153,7 @@ export function importUserData(db: Database, user: User, data: ExportData): void
     ).run(s.displayName, s.timezone, s.dailyGoal, s.preferredLanguage, s.leetcodeUsername, user.id);
 
     const insProblem = db.prepare(
-      'INSERT INTO user_problems (user_id, slug, status, notes, confidence, starred, first_solved_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO user_problems (user_id, slug, status, notes, confidence, starred, code, code_language, first_solved_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     );
     for (const p of data.problems) {
       insProblem.run(
@@ -156,6 +163,8 @@ export function importUserData(db: Database, user: User, data: ExportData): void
         p.notes,
         p.confidence,
         p.starred ? 1 : 0,
+        p.code,
+        p.codeLanguage,
         p.firstSolvedAt,
         p.updatedAt,
       );
