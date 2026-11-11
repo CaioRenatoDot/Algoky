@@ -2,7 +2,9 @@ import { PATTERNS, PROBLEMS } from '@algoky/shared';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
+import { DotPattern } from '../../components/DotPattern.tsx';
 import { Logo } from '../../components/Logo.tsx';
+import { AuthShowcase } from './AuthShowcase.tsx';
 
 const BENEFITS = [
   ['Progresso por padrão', 'Marque o que resolveu e veja quanto falta em cada parte da trilha.'],
@@ -44,27 +46,33 @@ export function AuthLayout({
         </p>
       </div>
 
-      <aside className="hidden border-l border-border bg-surface lg:flex lg:flex-col lg:justify-center lg:px-14">
-        <p className="font-mono text-sm text-muted">
-          {PATTERNS.length} padrões · {PROBLEMS.length} problemas
-        </p>
-        <h2 className="mt-3 text-2xl font-semibold tracking-tight text-balance">
-          O conteúdo é aberto. A conta acompanha o seu estudo.
-        </h2>
-        <dl className="mt-10 space-y-6">
-          {BENEFITS.map(([t, d]) => (
-            <div key={t} className="border-l-2 border-border pl-4">
-              <dt className="font-medium">{t}</dt>
-              <dd className="mt-1 text-sm leading-relaxed text-muted">{d}</dd>
-            </div>
-          ))}
-        </dl>
-        <Link
-          to="/padroes"
-          className="mt-10 inline-flex items-center gap-1.5 self-start text-sm font-medium text-text underline decoration-border-strong underline-offset-4 hover:decoration-accent"
-        >
-          Prefere estudar sem conta? Ver os padrões <ArrowRight className="h-4 w-4" />
-        </Link>
+      <aside className="relative hidden overflow-hidden border-l border-border bg-surface-2/60 lg:flex lg:flex-col lg:justify-center lg:px-14">
+        <DotPattern />
+        <div className="relative">
+          <p className="font-mono text-sm text-muted">
+            {PATTERNS.length} padrões · {PROBLEMS.length} problemas
+          </p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-balance">
+            O conteúdo é aberto. A conta acompanha o seu estudo.
+          </h2>
+          <div className="mt-8">
+            <AuthShowcase />
+          </div>
+          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5">
+            {BENEFITS.map(([t, d]) => (
+              <div key={t}>
+                <dt className="text-sm font-medium">{t}</dt>
+                <dd className="mt-1 text-xs leading-relaxed text-muted">{d}</dd>
+              </div>
+            ))}
+          </dl>
+          <Link
+            to="/padroes"
+            className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-text underline decoration-border-strong underline-offset-4 hover:decoration-accent"
+          >
+            Prefere estudar sem conta? Ver os padrões <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </aside>
     </div>
   );
