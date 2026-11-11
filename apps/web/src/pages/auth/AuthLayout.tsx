@@ -26,7 +26,6 @@ export function AuthLayout({
         </div>
       </div>
       <aside className="relative hidden overflow-hidden border-l border-border bg-surface lg:flex lg:flex-col lg:justify-center lg:px-16">
-        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
         <blockquote className="relative max-w-md">
           <p className="text-2xl font-medium leading-snug tracking-tight text-balance">
             “Não é sobre resolver 500 problemas. É sobre reconhecer os {PATTERNS.length} padrões por

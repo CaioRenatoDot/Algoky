@@ -100,8 +100,7 @@ function NextProblem({ d, onOpen }: { d: Dashboard; onOpen: (slug: string) => vo
   const pattern = PATTERNS_BY_ID.get(problem.pattern)!;
   const attempted = d.recent.some((r) => r.slug === problem.slug && r.type === 'attempt');
   return (
-    <Card className="relative overflow-hidden p-6">
-      <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
+    <Card className="p-6">
       <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <p className="flex items-center gap-1.5 text-sm font-medium text-accent">
