@@ -15,6 +15,7 @@ import { Suspense } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router';
 import { useDashboard, useLogout, useMe } from '../lib/queries.ts';
 import { FocusWatcher } from './FocusWatcher.tsx';
+import { ThemeToggle } from './ThemeToggle.tsx';
 import { LogoMark, Logo } from './Logo.tsx';
 import { PageLoader } from './ui/Feedback.tsx';
 import { ProgressBar } from './ui/Progress.tsx';
@@ -142,6 +143,7 @@ export function AppShell() {
               <p className="truncate text-sm font-medium">{me?.displayName}</p>
               <p className="truncate text-xs text-muted">@{me?.username}</p>
             </div>
+            <ThemeToggle />
             <button
               onClick={onLogout}
               className="rounded-md p-1.5 text-muted hover:bg-surface-2 hover:text-text"
@@ -163,6 +165,7 @@ export function AppShell() {
           {dash && (
             <StreakChip streak={dash.streak.current} activeToday={dash.streak.activeToday} />
           )}
+          <ThemeToggle />
           <NavLink
             to="/app/conquistas"
             className="rounded-md p-2 text-muted hover:text-text"
