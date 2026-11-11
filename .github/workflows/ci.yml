@@ -61,7 +61,7 @@ jobs:
           curl -fsS http://localhost:3333/ | grep -q '<div id="root">'
           curl -fsS -o /dev/null -w '%{http_code}\n' http://localhost:3333/app/trilha | grep -q 200
           curl -fsS -c jar -H 'content-type: application/json' \
-            -d '{"username":"ci","password":"senha-do-ci-123"}' http://localhost:3333/api/auth/register
+            -d '{"username":"ci_bot","password":"senha-do-ci-123"}' http://localhost:3333/api/auth/register
           curl -fsS -b jar -X PATCH -H 'content-type: application/json' \
             -d '{"status":"solved"}' http://localhost:3333/api/progress/two-sum | grep -q '"xpGained":10'
           docker exec algoky node scripts/backup.mjs
