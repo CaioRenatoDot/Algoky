@@ -23,14 +23,6 @@ export function PublicHeader() {
             >
               Padrões
             </NavLink>
-            <a
-              href="https://github.com/CaioRenatoDot/Algoky"
-              target="_blank"
-              rel="noreferrer"
-              className="hidden text-muted hover:text-text sm:inline"
-            >
-              Código
-            </a>
           </nav>
         </div>
         <div className="flex items-center gap-2">
@@ -72,10 +64,10 @@ export function PublicFooter() {
             href="https://github.com/CaioRenatoDot/Algoky"
             target="_blank"
             rel="noreferrer"
-            aria-label="GitHub"
-            className="hover:text-text"
+            className="inline-flex items-center gap-2 hover:text-text"
           >
             <GitHubIcon className="h-5 w-5" />
+            Código no GitHub
           </a>
           <a
             href="https://www.linkedin.com/in/caiorenato/"
