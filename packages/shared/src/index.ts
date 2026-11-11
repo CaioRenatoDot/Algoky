@@ -7,3 +7,6 @@ export * from './roadmap.ts';
 export * from './content/patterns/index.ts';
 export * from './content/problems.ts';
 export * from './api.ts';
+export * from './content/guides.ts';
+export * from './content/basics.ts';
+export * from './content/complexity.ts';

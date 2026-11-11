@@ -49,7 +49,14 @@ export function LandingPage() {
               </ButtonLink>
             </div>
             <p className="mt-4 text-sm text-muted">
-              Sem cadastro. Comece pelo padrão 01, Arrays &amp; Hashing.
+              Sem cadastro. Nunca estudou algoritmos?{' '}
+              <Link
+                to="/comece-aqui"
+                className="font-medium text-text underline decoration-border-strong underline-offset-4 hover:decoration-accent"
+              >
+                Comece aqui
+              </Link>
+              .
             </p>
           </div>
           <PatternRecognizer />
