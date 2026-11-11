@@ -10,6 +10,11 @@ const LoginPage = lazy(() => import('./pages/auth/LoginPage.tsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.tsx'));
 const PatternsIndexPage = lazy(() => import('./pages/PatternsIndexPage.tsx'));
 const PublicPatternPage = lazy(() => import('./pages/PublicPatternPage.tsx'));
+const PublicProblemsPage = lazy(() => import('./pages/PublicProblemsPage.tsx'));
+const GuidesIndexPage = lazy(() => import('./pages/GuidesIndexPage.tsx'));
+const GuidePage = lazy(() => import('./pages/GuidePage.tsx'));
+const BigOPage = lazy(() => import('./pages/BigOPage.tsx'));
+const StartHerePage = lazy(() => import('./pages/StartHerePage.tsx'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage.tsx'));
 const RoadmapPage = lazy(() => import('./pages/RoadmapPage.tsx'));
 const PatternPage = lazy(() => import('./pages/PatternPage.tsx'));
@@ -24,6 +29,11 @@ export const router = createBrowserRouter([
   // Conteúdo de estudo público: não exige conta.
   { path: '/padroes', element: <PatternsIndexPage /> },
   { path: '/padroes/:patternId', element: <PublicPatternPage /> },
+  { path: '/comece-aqui', element: <StartHerePage /> },
+  { path: '/problemas', element: <PublicProblemsPage /> },
+  { path: '/guias', element: <GuidesIndexPage /> },
+  { path: '/guias/:slug', element: <GuidePage /> },
+  { path: '/big-o', element: <BigOPage /> },
   {
     element: <RedirectIfAuthed />,
     children: [
