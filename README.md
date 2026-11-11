@@ -18,6 +18,10 @@ Plataforma de estudos de algoritmos e estruturas de dados: uma trilha com 21 pad
 
 ![Painel do Algoky](docs/screenshots/dashboard.webp)
 
+## Conteúdo aberto
+
+Todo o material de estudo é público, sem login: as páginas em `/padroes` reúne os 21 padrões com explicação, visualização, template e problemas. A conta é opcional e serve para acompanhar o progresso.
+
 ## Por que existe
 
 Estudar para entrevistas técnicas costuma falhar por dois motivos: **não saber o que estudar a seguir** e **não manter constância**. O Algoky resolve os dois:

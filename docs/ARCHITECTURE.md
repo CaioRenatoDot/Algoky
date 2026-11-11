@@ -107,7 +107,7 @@ São avaliadas depois de cada mutação, a partir de estatísticas agregadas. As
 
 ## Frontend
 
-- **Roteamento** (`router.tsx`): cada tela é um chunk carregado sob demanda. As rotas `/app/*` passam por `RequireAuth`.
+- **Roteamento** (`router.tsx`): cada tela é um chunk carregado sob demanda. O conteúdo de estudo é **público** (`/`, `/padroes`, `/padroes/:id`); só as rotas de acompanhamento (`/app/*`) passam por `RequireAuth`. A página pública e a página do padrão dentro do app usam o mesmo componente (`PatternStudy`): logado, a lista de problemas ganha status, notas e revisão; deslogado, vira uma lista de links para o LeetCode.
 - **Dados**: TanStack Query. Toda mutação de estudo devolve `{ data, xpGained, newAchievements, level, streak }`. O cliente atualiza o cache do progresso na hora, invalida dashboard e revisões e chama `celebrate()` (toast de XP, nível e conquista, e confete sob demanda).
 - **Estado local relevante**: o timer de foco (`lib/focusTimer.ts`) é um store externo persistido no `localStorage` (via `useSyncExternalStore`). Ele sobrevive a navegação e reload, sincroniza entre abas, e a conclusão é "reivindicada" por uma única aba.
 - **Design system**: tokens em CSS variables (`styles.css`) com temas claro e escuro próprios, expostos ao Tailwind v4 via `@theme inline`. As cores de dificuldade e a escala do heatmap foram validadas para contraste e daltonismo.

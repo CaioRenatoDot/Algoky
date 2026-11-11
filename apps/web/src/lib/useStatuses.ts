@@ -9,8 +9,8 @@ import { useMemo } from 'react';
 import { useProgress } from './queries.ts';
 
 /** Status por slug e progresso por padrão, derivados do cache de progresso. */
-export function useStatuses() {
-  const query = useProgress();
+export function useStatuses(enabled = true) {
+  const query = useProgress(enabled);
   const statuses = useMemo(
     () =>
       new Map<string, ProblemStatus>(
