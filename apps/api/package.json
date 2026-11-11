@@ -3,13 +3,14 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "API do Algoky: autenticação, progresso, revisões, foco e estatísticas sobre SQLite.",
+  "description": "API do Algoky: autentica\u00e7\u00e3o, progresso, revis\u00f5es, foco e estat\u00edsticas sobre SQLite.",
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/index.ts",
     "build": "tsup",
     "start": "node dist/index.js",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "seed": "tsx scripts/seed.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
