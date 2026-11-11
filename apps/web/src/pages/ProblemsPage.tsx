@@ -1,21 +1,23 @@
 import {
   DIFFICULTIES,
-  PATTERNS,
   PATTERNS_BY_ID,
   PROBLEMS,
   type Difficulty,
   type Problem,
 } from '@algoky/shared';
 import { clsx } from 'clsx';
-import { Search, SearchX, Star, X } from 'lucide-react';
+import { Search, SearchX, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { Page, PageHeader } from '../components/AppShell.tsx';
 import { ProblemDrawer } from '../components/ProblemDrawer.tsx';
 import { ProblemList } from '../components/ProblemList.tsx';
 import { Button } from '../components/ui/Button.tsx';
+import { Checkbox } from '../components/ui/Checkbox.tsx';
 import { EmptyState, ErrorState, Skeleton } from '../components/ui/Feedback.tsx';
-import { Input, Select } from '../components/ui/Field.tsx';
+import { Input } from '../components/ui/Field.tsx';
+import { Select } from '../components/ui/Select.tsx';
+import { patternOptions } from '../lib/selectOptions.ts';
 import { DIFFICULTY_LABEL } from '../lib/format.ts';
 import {
   EMPTY_FILTERS,
@@ -37,31 +39,6 @@ function groupByPattern(problems: Problem[]): Array<[string, Problem[]]> {
   const groups = new Map<string, Problem[]>();
   for (const p of problems) groups.set(p.pattern, [...(groups.get(p.pattern) ?? []), p]);
   return [...groups];
-}
-
-function Toggle({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      aria-pressed={active}
-      className={clsx(
-        'inline-flex h-10 items-center gap-1.5 rounded-lg border px-3 text-sm font-medium transition-colors',
-        active
-          ? 'border-accent/50 bg-accent-soft text-text'
-          : 'border-border bg-surface text-muted hover:text-text',
-      )}
-    >
-      {children}
-    </button>
-  );
 }
 
 export default function ProblemsPage() {
@@ -103,27 +80,22 @@ export default function ProblemsPage() {
             />
           </div>
           <Select
+            label="Padrão"
             value={filters.pattern}
-            onChange={(e) => set({ pattern: e.target.value })}
-            aria-label="Padrão"
-          >
-            <option value="">Todos os padrões</option>
-            {PATTERNS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.order}. {p.name}
-              </option>
-            ))}
-          </Select>
+            onChange={(v) => set({ pattern: v })}
+            options={patternOptions('Todos os padrões')}
+          />
           <Select
+            label="Status"
             value={filters.status}
-            onChange={(e) => set({ status: e.target.value as ProblemFilters['status'] })}
-            aria-label="Status"
-          >
-            <option value="">Qualquer status</option>
-            <option value="todo">A fazer</option>
-            <option value="attempted">Tentados</option>
-            <option value="solved">Resolvidos</option>
-          </Select>
+            onChange={(v) => set({ status: v })}
+            options={[
+              { value: '', label: 'Qualquer status' },
+              { value: 'todo', label: 'A fazer' },
+              { value: 'attempted', label: 'Tentados' },
+              { value: 'solved', label: 'Resolvidos' },
+            ]}
+          />
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <div className="flex gap-1.5" role="group" aria-label="Dificuldade">
@@ -150,13 +122,20 @@ export default function ProblemsPage() {
               );
             })}
           </div>
-          <Toggle active={filters.essential} onClick={() => set({ essential: !filters.essential })}>
-            Essenciais
-          </Toggle>
-          <Toggle active={filters.starred} onClick={() => set({ starred: !filters.starred })}>
-            <Star className={clsx('h-4 w-4', filters.starred && 'fill-current text-medium')} />{' '}
+          <Checkbox
+            className="ml-2"
+            checked={filters.essential}
+            onChange={(v) => set({ essential: v })}
+          >
+            Só essenciais
+          </Checkbox>
+          <Checkbox
+            className="ml-2"
+            checked={filters.starred}
+            onChange={(v) => set({ starred: v })}
+          >
             Favoritos
-          </Toggle>
+          </Checkbox>
           <div className="ml-auto flex items-center gap-2">
             {hasFilters && (
               <Button
@@ -173,15 +152,17 @@ export default function ProblemsPage() {
               </Button>
             )}
             <Select
+              label="Ordenar"
+              size="sm"
+              className="w-44"
               value={filters.sort}
-              onChange={(e) => set({ sort: e.target.value as ProblemFilters['sort'] })}
-              className="h-9 w-40 text-xs"
-              aria-label="Ordenar"
-            >
-              <option value="trilha">Ordem da trilha</option>
-              <option value="numero">Número</option>
-              <option value="dificuldade">Dificuldade</option>
-            </Select>
+              onChange={(v) => set({ sort: v })}
+              options={[
+                { value: 'trilha', label: 'Ordem da trilha' },
+                { value: 'numero', label: 'Número' },
+                { value: 'dificuldade', label: 'Dificuldade' },
+              ]}
+            />
           </div>
         </div>
       </div>

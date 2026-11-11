@@ -1,6 +1,5 @@
 import {
   DIFFICULTIES,
-  PATTERNS,
   PATTERNS_BY_ID,
   PROBLEMS,
   leetcodeUrl,
@@ -12,9 +11,12 @@ import { ExternalLink, Search, SearchX } from 'lucide-react';
 import { useMemo } from 'react';
 import { Link, Navigate, useSearchParams } from 'react-router';
 import { PublicLayout } from '../components/PublicLayout.tsx';
+import { Checkbox } from '../components/ui/Checkbox.tsx';
 import { DifficultyBadge } from '../components/ui/Badge.tsx';
 import { EmptyState } from '../components/ui/Feedback.tsx';
-import { Input, Select } from '../components/ui/Field.tsx';
+import { Input } from '../components/ui/Field.tsx';
+import { Select } from '../components/ui/Select.tsx';
+import { patternOptions } from '../lib/selectOptions.ts';
 import { DIFFICULTY_LABEL } from '../lib/format.ts';
 import {
   filterProblems,
@@ -80,17 +82,11 @@ export default function PublicProblemsPage() {
             />
           </div>
           <Select
+            label="Padrão"
             value={filters.pattern}
-            onChange={(e) => set({ pattern: e.target.value })}
-            aria-label="Padrão"
-          >
-            <option value="">Todos os padrões</option>
-            {PATTERNS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.order}. {p.name}
-              </option>
-            ))}
-          </Select>
+            onChange={(v) => set({ pattern: v })}
+            options={patternOptions('Todos os padrões')}
+          />
         </div>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {DIFFICULTIES.map((d) => {
@@ -115,18 +111,13 @@ export default function PublicProblemsPage() {
               </button>
             );
           })}
-          <button
-            aria-pressed={filters.essential}
-            onClick={() => set({ essential: !filters.essential })}
-            className={clsx(
-              'h-9 rounded-lg border px-3 text-sm font-medium',
-              filters.essential
-                ? 'border-accent/50 bg-accent-soft text-text'
-                : 'border-border bg-surface text-muted hover:text-text',
-            )}
+          <Checkbox
+            className="ml-2 self-center"
+            checked={filters.essential}
+            onChange={(v) => set({ essential: v })}
           >
             Só essenciais
-          </button>
+          </Checkbox>
         </div>
 
         <p className="mb-6 mt-6 text-sm text-muted" aria-live="polite">

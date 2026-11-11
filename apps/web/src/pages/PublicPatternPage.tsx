@@ -1,10 +1,11 @@
-import { PATTERNS, PATTERNS_BY_ID } from '@algoky/shared';
+import { PATTERNS_BY_ID } from '@algoky/shared';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { PatternStudy, studySections } from '../components/PatternStudy.tsx';
 import { PatternToc } from '../components/PatternToc.tsx';
 import { PublicLayout } from '../components/PublicLayout.tsx';
-import { Select } from '../components/ui/Field.tsx';
+import { Select } from '../components/ui/Select.tsx';
+import { patternOptions } from '../lib/selectOptions.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
 
 /** Destaca no índice "Nesta página" a seção que está sendo lida. */
@@ -63,16 +64,11 @@ export default function PublicPatternPage() {
         <div className="min-w-0 py-10 lg:py-14">
           <div className="mb-8 lg:hidden">
             <Select
+              label="Ir para outro padrão"
               value={pattern.id}
-              onChange={(e) => navigate(`/padroes/${e.target.value}`)}
-              aria-label="Ir para outro padrão"
-            >
-              {PATTERNS.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {String(p.order).padStart(2, '0')}. {p.name}
-                </option>
-              ))}
-            </Select>
+              onChange={(v) => navigate(`/padroes/${v}`)}
+              options={patternOptions()}
+            />
           </div>
           <div className="mx-auto max-w-[44rem]">
             <PatternStudy pattern={pattern} linkBase="/padroes" />
