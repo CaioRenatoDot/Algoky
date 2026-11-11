@@ -6,3 +6,4 @@ export * from './achievements.ts';
 export * from './roadmap.ts';
 export * from './content/patterns/index.ts';
 export * from './content/problems.ts';
+export * from './api.ts';
