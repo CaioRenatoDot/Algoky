@@ -1,0 +1,14 @@
+{
+  "name": "@algoky/shared",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Tipos, regras de domínio (gamificação, revisão espaçada) e conteúdo compartilhados entre API e web.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  }
+}
