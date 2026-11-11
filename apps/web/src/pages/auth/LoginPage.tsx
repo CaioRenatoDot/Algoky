@@ -38,7 +38,7 @@ export default function LoginPage() {
           : 'Continue sua trilha de estudos.'
       }
     >
-      <form onSubmit={onSubmit} className="space-y-5" noValidate>
+      <form onSubmit={onSubmit} className="space-y-4" noValidate>
         <Field label="Usuário" htmlFor="username">
           <Input
             id="username"
@@ -70,7 +70,6 @@ export default function LoginPage() {
         )}
         <Button
           type="submit"
-          size="lg"
           className="w-full"
           loading={login.isPending}
           disabled={!username || !password}
@@ -79,7 +78,7 @@ export default function LoginPage() {
         </Button>
       </form>
       {config?.allowRegistration !== false && (
-        <p className="mt-8 border-t border-border pt-6 text-sm text-muted">
+        <p className="mt-7 border-t border-border pt-5 text-sm text-muted">
           Primeira vez aqui?{' '}
           <Link
             to="/cadastro"

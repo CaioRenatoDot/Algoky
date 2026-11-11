@@ -23,7 +23,7 @@ export function AuthLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="grid min-h-dvh lg:grid-cols-[1fr_minmax(0,32rem)]">
+    <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] xl:grid-cols-2">
       <div className="flex flex-col px-6 py-6 sm:px-10">
         <div className="flex items-center justify-between">
           <Link to="/" aria-label="Algoky, início">
@@ -36,23 +36,23 @@ export function AuthLayout({
             <ArrowLeft className="h-4 w-4" /> Padrões
           </Link>
         </div>
-        <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-12">
-          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-          <p className="mt-2 text-sm text-muted">{subtitle}</p>
-          <div className="mt-8">{children}</div>
+        <div className="mx-auto flex w-full max-w-[21rem] flex-1 flex-col justify-center py-10">
+          <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
+          <p className="mt-1.5 text-sm text-muted">{subtitle}</p>
+          <div className="mt-7">{children}</div>
         </div>
         <p className="text-center text-xs text-subtle">
           Algoky · guia aberto de padrões de algoritmos
         </p>
       </div>
 
-      <aside className="relative hidden overflow-hidden border-l border-border bg-surface-2/60 lg:flex lg:flex-col lg:justify-center lg:px-14">
+      <aside className="relative hidden overflow-hidden border-l border-border bg-surface-2/60 lg:flex lg:flex-col lg:justify-center lg:px-12 xl:px-20">
         <DotPattern />
-        <div className="relative">
+        <div className="relative mx-auto w-full max-w-md">
           <p className="font-mono text-sm text-muted">
             {PATTERNS.length} padrões · {PROBLEMS.length} problemas
           </p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-balance">
+          <h2 className="mt-3 text-xl font-semibold tracking-tight text-balance">
             O conteúdo é aberto. A conta acompanha o seu estudo.
           </h2>
           <div className="mt-8">

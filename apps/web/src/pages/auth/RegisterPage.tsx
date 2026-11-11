@@ -91,7 +91,7 @@ export default function RegisterPage() {
       title="Criar conta"
       subtitle="Gratuito. Seus dados ficam nesta instância e podem ser exportados quando quiser."
     >
-      <form onSubmit={onSubmit} className="space-y-5" noValidate>
+      <form onSubmit={onSubmit} className="space-y-4" noValidate>
         <Field
           label="Como quer ser chamado?"
           htmlFor="displayName"
@@ -178,11 +178,11 @@ export default function RegisterPage() {
           </p>
         )}
 
-        <Button type="submit" size="lg" className="w-full" loading={register.isPending}>
+        <Button type="submit" className="w-full" loading={register.isPending}>
           Criar conta
         </Button>
       </form>
-      <p className="mt-8 border-t border-border pt-6 text-sm text-muted">
+      <p className="mt-7 border-t border-border pt-5 text-sm text-muted">
         Já tem conta?{' '}
         <Link
           to="/entrar"
