@@ -7,7 +7,8 @@ import { toast } from 'sonner';
 import { Page, PageHeader } from '../components/AppShell.tsx';
 import { Button, buttonClass } from '../components/ui/Button.tsx';
 import { Card } from '../components/ui/Card.tsx';
-import { Field, Input, Select } from '../components/ui/Field.tsx';
+import { Field, Input } from '../components/ui/Field.tsx';
+import { Select } from '../components/ui/Select.tsx';
 import { PageLoader } from '../components/ui/Feedback.tsx';
 import { Segmented } from '../components/ui/Segmented.tsx';
 import { api, errorMessage } from '../lib/api.ts';
@@ -136,7 +137,7 @@ function StudySettings({ me }: { me: User }) {
             onPointerUp={commitGoal}
             onKeyUp={commitGoal}
             onBlur={commitGoal}
-            className="flex-1 accent-[var(--accent)]"
+            className="flex-1"
             aria-label="Meta diária"
           />
           <span className="w-8 text-right text-lg font-semibold tabular-nums">{goal}</span>
@@ -155,13 +156,14 @@ function StudySettings({ me }: { me: User }) {
         htmlFor="tz"
         hint="Define quando o seu dia vira (streak, meta e revisões)."
       >
-        <Select id="tz" value={me.timezone} onChange={(e) => save({ timezone: e.target.value })}>
-          {timezones.map((tz) => (
-            <option key={tz} value={tz}>
-              {tz.replaceAll('_', ' ')}
-            </option>
-          ))}
-        </Select>
+        <Select
+          id="tz"
+          label="Fuso horário"
+          searchable
+          value={me.timezone}
+          onChange={(v) => save({ timezone: v })}
+          options={timezones.map((tz) => ({ value: tz, label: tz.replaceAll('_', ' ') }))}
+        />
       </Field>
     </>
   );

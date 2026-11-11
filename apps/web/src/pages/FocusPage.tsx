@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { Page, PageHeader } from '../components/AppShell.tsx';
 import { Button, buttonClass } from '../components/ui/Button.tsx';
 import { Card } from '../components/ui/Card.tsx';
-import { Select } from '../components/ui/Field.tsx';
+import { Select } from '../components/ui/Select.tsx';
 import { ProgressRing } from '../components/ui/Progress.tsx';
 import { focusTimer, formatClock, remainingMs, useFocusState } from '../lib/focusTimer.ts';
 import { formatMinutes, patternName } from '../lib/format.ts';
@@ -69,6 +69,22 @@ export default function FocusPage() {
         .slice(0, 25),
     };
   }, [statuses]);
+
+  const problemOptions = useMemo(() => {
+    const toOption = (group: string) => (p: { slug: string; id: number; title: string }) => ({
+      value: p.slug,
+      label: `${p.id}. ${p.title}`,
+      group,
+    });
+    const listed = new Set([...options.attempted, ...options.next].map((p) => p.slug));
+    const extra = slug && !listed.has(slug) ? [PROBLEMS_BY_SLUG.get(slug)!].filter(Boolean) : [];
+    return [
+      { value: '', label: 'Sem problema específico' },
+      ...extra.map(toOption('Selecionado')),
+      ...options.attempted.map(toOption('Em andamento')),
+      ...options.next.map(toOption('Próximos da trilha')),
+    ];
+  }, [options, slug]);
 
   const finishEarly = () => {
     const { minutes, slug: s } = focusTimer.stop();
@@ -148,38 +164,17 @@ export default function FocusPage() {
                   step={5}
                   value={duration}
                   onChange={(e) => setDuration(Number(e.target.value))}
-                  className="mt-2 w-full accent-[var(--accent)]"
+                  className="mt-2 w-full"
                   aria-label="Duração personalizada em minutos"
                 />
               </label>
               <Select
+                label="Problema da sessão"
                 value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-                aria-label="Problema da sessão"
-              >
-                <option value="">Sem problema específico</option>
-                {options.attempted.length > 0 && (
-                  <optgroup label="Em andamento">
-                    {options.attempted.map((p) => (
-                      <option key={p.slug} value={p.slug}>
-                        {p.id}. {p.title}
-                      </option>
-                    ))}
-                  </optgroup>
-                )}
-                <optgroup label="Próximos da trilha">
-                  {options.next.map((p) => (
-                    <option key={p.slug} value={p.slug}>
-                      {p.id}. {p.title}
-                    </option>
-                  ))}
-                </optgroup>
-                {slug &&
-                  !options.attempted.some((p) => p.slug === slug) &&
-                  !options.next.some((p) => p.slug === slug) && (
-                    <option value={slug}>{PROBLEMS_BY_SLUG.get(slug)?.title}</option>
-                  )}
-              </Select>
+                onChange={setSlug}
+                options={problemOptions}
+                searchable
+              />
               <Button
                 size="lg"
                 className="w-full"
