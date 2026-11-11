@@ -11,6 +11,9 @@ import {
   toLocalDate,
   unlockedAchievements,
   type AchievementStats,
+  type Dashboard,
+  type HeatmapDay,
+  type Totals,
   type ActivityType,
   type LevelInfo,
   type LocalDate,
@@ -31,16 +34,7 @@ interface Core {
   streak: StreakInfo;
   byPattern: Map<string, PatternProgress>;
   achievementStats: AchievementStats;
-  totals: {
-    solved: number;
-    attempted: number;
-    easy: number;
-    medium: number;
-    hard: number;
-    reviews: number;
-    focusMinutes: number;
-    totalProblems: number;
-  };
+  totals: Totals;
 }
 
 function gatherCore(db: Database, user: User, now: Date): Core {
@@ -127,33 +121,6 @@ export function syncAchievements(db: Database, user: User, now = new Date()): st
   return unlocked.filter(
     (code) => Number(insert.run(user.id, code, now.toISOString()).changes) > 0,
   );
-}
-
-export interface HeatmapDay {
-  date: LocalDate;
-  count: number;
-  xp: number;
-}
-
-export interface Dashboard {
-  today: LocalDate;
-  level: LevelInfo;
-  streak: StreakInfo;
-  dailyGoal: { target: number; done: number; focusMinutes: number };
-  totals: Core['totals'];
-  byPattern: PatternProgress[];
-  heatmap: HeatmapDay[];
-  reviewsDue: number;
-  suggestion: string | null;
-  recent: Array<{
-    type: ActivityType;
-    slug: string | null;
-    xp: number;
-    minutes: number;
-    detail: string | null;
-    createdAt: string;
-  }>;
-  achievements: Array<{ code: string; unlockedAt: string | null; current: number; target: number }>;
 }
 
 export function dashboard(db: Database, user: User, now = new Date()): Dashboard {

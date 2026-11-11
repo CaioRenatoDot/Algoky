@@ -1,17 +1,8 @@
 import { createHash, randomBytes } from 'node:crypto';
-import type { TemplateLanguage } from '@algoky/shared';
+import type { TemplateLanguage, User } from '@algoky/shared';
 import type { Database } from '../db/database.ts';
 
-export interface User {
-  id: number;
-  username: string;
-  displayName: string;
-  timezone: string;
-  dailyGoal: number;
-  preferredLanguage: TemplateLanguage;
-  leetcodeUsername: string | null;
-  createdAt: string;
-}
+export type { User };
 
 interface UserRow {
   id: number;

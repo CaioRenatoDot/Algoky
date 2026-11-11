@@ -7,6 +7,10 @@ import {
   reviewCard,
   toLocalDate,
   type ActivityType,
+  type DueReview,
+  type FocusSession,
+  type ProblemState,
+  type ReviewCardDto,
   type LocalDate,
   type ProblemStatus,
   type ReviewCard,
@@ -16,20 +20,7 @@ import { transaction, type Database } from '../db/database.ts';
 import { badRequest, notFound } from '../lib/errors.ts';
 import type { User } from './users.ts';
 
-export interface ReviewCardDto extends ReviewCard {
-  lastReviewedAt: string | null;
-}
-
-export interface ProblemState {
-  slug: string;
-  status: ProblemStatus;
-  notes: string;
-  confidence: number | null;
-  starred: boolean;
-  firstSolvedAt: string | null;
-  updatedAt: string;
-  review: ReviewCardDto | null;
-}
+export type { DueReview, FocusSession, ProblemState, ReviewCardDto };
 
 interface ProblemRow {
   slug: string;
@@ -225,14 +216,6 @@ export function updateProblem(
   });
 }
 
-export interface DueReview {
-  slug: string;
-  card: ReviewCardDto;
-  notes: string;
-  /** Dias de atraso (0 = vence hoje). */
-  overdueDays: number;
-}
-
 export function dueReviews(db: Database, user: User, now = new Date()): DueReview[] {
   const today = toLocalDate(now, user.timezone);
   const rows = db
@@ -294,12 +277,6 @@ export function reviewProblem(
     logActivity(db, user.id, { type: 'review', slug, xp: xpGained, detail: rating }, today, nowIso);
     return { data: getProblemState(db, user.id, slug)!, xpGained };
   });
-}
-
-export interface FocusSession {
-  minutes: number;
-  slug: string | null;
-  localDate: LocalDate;
 }
 
 export function logFocusSession(
