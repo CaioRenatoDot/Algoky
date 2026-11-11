@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Brain,
   CheckCircle2,
+  Code2,
   CircleDashed,
   ExternalLink,
   Flame,
@@ -122,13 +123,17 @@ function NextProblem({ d, onOpen }: { d: Dashboard; onOpen: (slug: string) => vo
           </div>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
+          <ButtonLink to={`/app/problemas/${problem.slug}`} icon={<Code2 className="h-4 w-4" />}>
+            Resolver
+          </ButtonLink>
           <a
             href={leetcodeUrl(problem.slug)}
             target="_blank"
             rel="noreferrer"
-            className={buttonClass('primary')}
+            className={buttonClass('ghost')}
+            title="Abrir no LeetCode"
           >
-            Resolver <ExternalLink className="h-4 w-4" />
+            LeetCode <ExternalLink className="h-4 w-4" />
           </a>
           <Button
             variant="secondary"

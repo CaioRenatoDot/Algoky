@@ -18,6 +18,7 @@ const StartHerePage = lazy(() => import('./pages/StartHerePage.tsx'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage.tsx'));
 const RoadmapPage = lazy(() => import('./pages/RoadmapPage.tsx'));
 const PatternPage = lazy(() => import('./pages/PatternPage.tsx'));
+const WorkspacePage = lazy(() => import('./pages/WorkspacePage.tsx'));
 const ProblemsPage = lazy(() => import('./pages/ProblemsPage.tsx'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage.tsx'));
 const FocusPage = lazy(() => import('./pages/FocusPage.tsx'));
@@ -52,6 +53,7 @@ export const router = createBrowserRouter([
           { path: 'trilha', element: <RoadmapPage /> },
           { path: 'trilha/:patternId', element: <PatternPage /> },
           { path: 'problemas', element: <ProblemsPage /> },
+          { path: 'problemas/:slug', element: <WorkspacePage /> },
           { path: 'revisao', element: <ReviewPage /> },
           { path: 'foco', element: <FocusPage /> },
           { path: 'conquistas', element: <AchievementsPage /> },

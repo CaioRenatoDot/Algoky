@@ -1,6 +1,6 @@
 import { PROBLEMS_BY_SLUG, diffDays, leetcodeUrl, type ProblemStatus } from '@algoky/shared';
 import { clsx } from 'clsx';
-import { CalendarClock, ExternalLink, Star, Timer } from 'lucide-react';
+import { CalendarClock, Code2, ExternalLink, Star, Timer } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { formatLocalDate, inDays, patternName } from '../lib/format.ts';
@@ -88,13 +88,21 @@ function ProblemDrawerContent({ slug, onClose }: { slug: string | null; onClose:
       }
       footer={
         <div className="flex flex-wrap gap-2">
+          <Link
+            to={`/app/problemas/${problem.slug}`}
+            onClick={close}
+            className={buttonClass('primary', 'md', 'flex-1')}
+          >
+            <Code2 className="h-4 w-4" /> Abrir no editor
+          </Link>
           <a
             href={leetcodeUrl(problem.slug)}
             target="_blank"
             rel="noreferrer"
-            className={buttonClass('primary', 'md', 'flex-1')}
+            className={buttonClass('secondary', 'md')}
+            title="Abrir no LeetCode"
           >
-            Abrir no LeetCode <ExternalLink className="h-4 w-4" />
+            LeetCode <ExternalLink className="h-4 w-4" />
           </a>
           <Link
             to={`/app/foco?problema=${problem.slug}`}

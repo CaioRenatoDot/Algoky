@@ -1,6 +1,7 @@
 import { leetcodeUrl, type Problem, type ProblemState } from '@algoky/shared';
 import { clsx } from 'clsx';
-import { ExternalLink, NotebookPen, Star } from 'lucide-react';
+import { Code2, ExternalLink, NotebookPen, Star } from 'lucide-react';
+import { Link } from 'react-router';
 import { patternName } from '../lib/format.ts';
 import { useUpdateProblem } from '../lib/queries.ts';
 import { StatusButton } from './StatusButton.tsx';
@@ -75,6 +76,17 @@ export function ProblemList({
                 />
               )}
               <DifficultyBadge difficulty={p.difficulty} />
+              <Link
+                to={`/app/problemas/${p.slug}`}
+                className={clsx(
+                  'rounded-md p-1.5 hover:bg-surface-3 hover:text-text',
+                  state?.code ? 'text-accent' : 'text-subtle',
+                )}
+                aria-label={`Abrir ${p.title} no editor`}
+                title={state?.code ? 'Continuar no editor' : 'Abrir no editor'}
+              >
+                <Code2 className="h-4 w-4" />
+              </Link>
               <a
                 href={leetcodeUrl(p.slug)}
                 target="_blank"

@@ -14,6 +14,8 @@ const state = (slug: string, patch: Partial<ProblemState>): [string, ProblemStat
     status: 'todo',
     notes: '',
     confidence: null,
+    code: '',
+    codeLanguage: null,
     starred: false,
     firstSolvedAt: null,
     updatedAt: '',

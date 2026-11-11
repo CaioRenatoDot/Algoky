@@ -6,6 +6,7 @@ import type {
   ProblemState,
   ProblemStatus,
   ReviewRating,
+  TemplateLanguage,
   User,
 } from '@algoky/shared';
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -136,6 +137,8 @@ export interface ProblemPatch {
   notes?: string;
   confidence?: number | null;
   starred?: boolean;
+  code?: string;
+  codeLanguage?: TemplateLanguage | null;
 }
 
 export function useUpdateProblem() {
@@ -148,6 +151,27 @@ export function useUpdateProblem() {
         new Map(prev).set(state.slug, state),
       ),
   );
+}
+
+/**
+ * Salvamento silencioso de rascunhos (código, linguagem, notas): atualiza o
+ * cache do progresso sem invalidar o dashboard nem disparar comemorações.
+ */
+export function useSaveDraft() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      slug,
+      patch,
+    }: {
+      slug: string;
+      patch: Pick<ProblemPatch, 'code' | 'codeLanguage' | 'notes'>;
+    }) => api.patch<MutationResponse<ProblemState>>(`/api/progress/${slug}`, patch),
+    onSuccess: ({ data }) =>
+      qc.setQueryData<Map<string, ProblemState>>(keys.progress, (prev) =>
+        new Map(prev).set(data.slug, data),
+      ),
+  });
 }
 
 export function useReview() {
