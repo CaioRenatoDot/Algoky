@@ -2,7 +2,7 @@
   "name": "algoky",
   "version": "2.0.0",
   "private": true,
-  "description": "Plataforma de estudos de DSA e LeetCode com trilha de padrões, revisão espaçada e gamificação.",
+  "description": "Plataforma de estudos de DSA e LeetCode com trilha de padr\u00f5es, revis\u00e3o espa\u00e7ada e gamifica\u00e7\u00e3o.",
   "license": "MIT",
   "type": "module",
   "workspaces": [
@@ -17,7 +17,7 @@
     "dev:api": "npm run dev --workspace @algoky/api",
     "dev:web": "npm run dev --workspace @algoky/web",
     "build": "npm run build --workspace @algoky/web && npm run build --workspace @algoky/api",
-    "start": "npm run start --workspace @algoky/api",
+    "start": "node --enable-source-maps apps/api/dist/index.js",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
