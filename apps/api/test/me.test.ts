@@ -112,3 +112,30 @@ describe('infra', () => {
     expect(res.headers['x-content-type-options']).toBe('nosniff');
   });
 });
+
+describe('frontend estático', () => {
+  it('serve o SPA nas rotas do app e 404 em assets inexistentes', async () => {
+    const { mkdtempSync, writeFileSync, mkdirSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const { join } = await import('node:path');
+    const dir = mkdtempSync(join(tmpdir(), 'algoky-web-'));
+    mkdirSync(join(dir, 'assets'));
+    writeFileSync(join(dir, 'index.html'), '<!doctype html><title>Algoky</title>');
+    writeFileSync(join(dir, 'assets', 'app-abc123.js'), 'console.log(1)');
+    const web = await createTestApp({ WEB_DIST: dir });
+    const client = new Client(web.app);
+
+    const page = await client.get('/app/trilha?x=1');
+    expect(page.statusCode).toBe(200);
+    expect(page.headers['content-type']).toMatch(/text\/html/);
+    expect(page.headers['cache-control']).toBe('no-cache');
+
+    const asset = await client.get('/assets/app-abc123.js');
+    expect(asset.statusCode).toBe(200);
+    expect(asset.headers['cache-control']).toContain('immutable');
+
+    expect((await client.get('/assets/antigo-999.js')).statusCode).toBe(404);
+    expect((await client.get('/favicon.png')).statusCode).toBe(404);
+    await web.close();
+  });
+});

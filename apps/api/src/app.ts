@@ -102,7 +102,12 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
       },
     });
     app.setNotFoundHandler((request, reply) => {
-      if (request.method === 'GET' && !request.url.startsWith('/api/')) {
+      // Só rotas do SPA recebem o index.html. Arquivos ausentes (ex.: um asset
+      // antigo pedido por um cliente com cache de um deploy anterior) dão 404.
+      const path = request.url.split('?')[0]!;
+      const isSpaRoute =
+        !path.startsWith('/api/') && !path.startsWith('/assets/') && !/\.[a-z0-9]+$/i.test(path);
+      if (request.method === 'GET' && isSpaRoute) {
         return reply.header('cache-control', 'no-cache').sendFile('index.html');
       }
       return reply
