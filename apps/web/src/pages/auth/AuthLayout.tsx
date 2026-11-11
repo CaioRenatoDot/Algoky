@@ -1,4 +1,3 @@
-import { PATTERNS, PROBLEMS } from '@algoky/shared';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
@@ -49,10 +48,7 @@ export function AuthLayout({
       <aside className="relative hidden overflow-hidden border-l border-border bg-surface-2/60 lg:flex lg:flex-col lg:justify-center lg:px-12 xl:px-20">
         <DotPattern />
         <div className="relative mx-auto w-full max-w-md">
-          <p className="font-mono text-sm text-muted">
-            {PATTERNS.length} padrões · {PROBLEMS.length} problemas
-          </p>
-          <h2 className="mt-3 text-xl font-semibold tracking-tight text-balance">
+          <h2 className="text-xl font-semibold tracking-tight text-balance">
             O conteúdo é aberto. A conta acompanha o seu estudo.
           </h2>
           <div className="mt-8">
