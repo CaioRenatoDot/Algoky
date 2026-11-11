@@ -11,6 +11,7 @@ import type { Config } from './config.ts';
 import type { Database } from './db/database.ts';
 import { HttpError } from './lib/errors.ts';
 import { authRoutes } from './routes/auth.ts';
+import { studyRoutes } from './routes/study.ts';
 
 export interface AppContext {
   db: Database;
@@ -82,6 +83,7 @@ export async function buildApp(ctx: AppContext): Promise<FastifyInstance> {
   });
 
   await app.register(authRoutes, ctx);
+  await app.register(studyRoutes, ctx);
 
   if (config.webDist && existsSync(join(config.webDist, 'index.html'))) {
     await app.register(fastifyStatic, {
