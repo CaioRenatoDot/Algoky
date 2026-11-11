@@ -14,6 +14,7 @@ import {
 import { Suspense } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router';
 import { useDashboard, useLogout, useMe } from '../lib/queries.ts';
+import { FocusWatcher } from './FocusWatcher.tsx';
 import { LogoMark, Logo } from './Logo.tsx';
 import { PageLoader } from './ui/Feedback.tsx';
 import { ProgressBar } from './ui/Progress.tsx';
@@ -184,6 +185,8 @@ export function AppShell() {
           <Outlet />
         </Suspense>
       </main>
+
+      <FocusWatcher />
 
       {/* Navegação inferior mobile */}
       <nav
