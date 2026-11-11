@@ -8,6 +8,8 @@ import { NotFoundPage } from './pages/NotFoundPage.tsx';
 // Cada tela do app é um chunk separado, carregado sob demanda.
 const LoginPage = lazy(() => import('./pages/auth/LoginPage.tsx'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage.tsx'));
+const PatternsIndexPage = lazy(() => import('./pages/PatternsIndexPage.tsx'));
+const PublicPatternPage = lazy(() => import('./pages/PublicPatternPage.tsx'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage.tsx'));
 const RoadmapPage = lazy(() => import('./pages/RoadmapPage.tsx'));
 const PatternPage = lazy(() => import('./pages/PatternPage.tsx'));
@@ -19,6 +21,9 @@ const SettingsPage = lazy(() => import('./pages/SettingsPage.tsx'));
 
 export const router = createBrowserRouter([
   { path: '/', element: <LandingPage /> },
+  // Conteúdo de estudo público: não exige conta.
+  { path: '/padroes', element: <PatternsIndexPage /> },
+  { path: '/padroes/:patternId', element: <PublicPatternPage /> },
   {
     element: <RedirectIfAuthed />,
     children: [
