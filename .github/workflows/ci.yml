@@ -66,7 +66,9 @@ jobs:
             -d '{"status":"solved"}' http://localhost:3333/api/progress/two-sum | grep -q '"xpGained":10'
           docker exec algoky node scripts/backup.mjs
           docker restart algoky
-          curl -fsS --retry 15 --retry-connrefused --retry-delay 1 -b jar http://localhost:3333/api/dashboard | grep -q '"solved":1'
+          # espera o app subir de novo (o proxy do Docker reseta conexões até lá)
+          curl -fsS --retry 30 --retry-all-errors --retry-delay 1 -o /dev/null http://localhost:3333/api/health
+          curl -fsS -b jar http://localhost:3333/api/dashboard | grep -q '"solved":1'
           echo "smoke test ok: dados persistiram após restart"
       - name: Logs do container
         if: always()
