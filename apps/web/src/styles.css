@@ -153,6 +153,8 @@
   kbd,
   pre {
     @apply font-mono;
+    /* Sem ligaduras: em material de estudo, `<=` e `->` devem aparecer como se digitam. */
+    font-variant-ligatures: none;
   }
 }
 
@@ -169,6 +171,7 @@
 .shiki,
 .shiki span {
   background-color: transparent !important;
+  font-variant-ligatures: none;
 }
 [data-theme='dark'] .shiki,
 [data-theme='dark'] .shiki span {
