@@ -1,6 +1,8 @@
 import { PATTERNS, PATTERNS_BY_ID, PROBLEMS } from '@algoky/shared';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
+import { DotPattern } from '../components/DotPattern.tsx';
+import { PatternRecognizer } from '../components/PatternRecognizer.tsx';
 import { PatternToc } from '../components/PatternToc.tsx';
 import { PublicLayout } from '../components/PublicLayout.tsx';
 import { RichText } from '../components/RichText.tsx';
@@ -21,27 +23,36 @@ export function LandingPage() {
 
   return (
     <PublicLayout>
-      <section className="mx-auto max-w-3xl px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
-        <p className="font-mono text-sm text-muted">Guia de estudo · gratuito e de código aberto</p>
-        <h1 className="mt-5 text-4xl font-semibold leading-[1.1] tracking-tight text-balance sm:text-5xl">
-          Os padrões por trás dos problemas de entrevista.
-        </h1>
-        <p className="mt-6 text-lg leading-relaxed text-muted text-pretty">
-          A maioria dos problemas de algoritmos é uma variação de poucos padrões. O Algoky explica
-          os {PATTERNS.length} mais cobrados, em português e em ordem de estudo, com visualizações,
-          templates em Python, TypeScript e Java e {PROBLEMS.length} problemas do LeetCode para
-          praticar.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-          <ButtonLink to="/padroes/arrays-hashing" size="lg">
-            Começar pelo padrão 01
-          </ButtonLink>
-          <Link
-            to="/padroes"
-            className="inline-flex items-center gap-1.5 font-medium text-muted hover:text-text"
-          >
-            Ver todos os padrões <ArrowRight className="h-4 w-4" />
-          </Link>
+      <section className="relative overflow-hidden border-b border-border">
+        <DotPattern className="text-border/80" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-24">
+          <div>
+            <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight text-balance sm:text-5xl">
+              Os padrões por trás dos problemas de entrevista.
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted text-pretty">
+              A maioria dos problemas é uma variação de poucos padrões. Aprenda a reconhecer os
+              sinais no enunciado e a aplicar a técnica certa, com {PATTERNS.length} padrões
+              explicados em português e {PROBLEMS.length} problemas do LeetCode para praticar.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <ButtonLink
+                to="/padroes/arrays-hashing"
+                size="lg"
+                className="flex-row-reverse"
+                icon={<ArrowRight className="h-4 w-4" />}
+              >
+                Começar a estudar
+              </ButtonLink>
+              <ButtonLink to="/padroes" size="lg" variant="secondary">
+                Ver os {PATTERNS.length} padrões
+              </ButtonLink>
+            </div>
+            <p className="mt-4 text-sm text-muted">
+              Sem cadastro. Comece pelo padrão 01, Arrays &amp; Hashing.
+            </p>
+          </div>
+          <PatternRecognizer />
         </div>
       </section>
 

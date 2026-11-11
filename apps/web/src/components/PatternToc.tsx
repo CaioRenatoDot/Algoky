@@ -1,6 +1,7 @@
 import { PATTERNS, PROBLEMS, type Pattern } from '@algoky/shared';
 import { clsx } from 'clsx';
 import { Check } from 'lucide-react';
+import { ButtonLink } from './ui/Button.tsx';
 import { Link } from 'react-router';
 import { useMe } from '../lib/queries.ts';
 import { useStatuses } from '../lib/useStatuses.ts';
@@ -95,6 +96,7 @@ export function PatternToc({
 
   return (
     <div className={compact ? 'space-y-5' : 'space-y-12'}>
+      {!compact && <TrackBanner />}
       {PARTS.map((part) => (
         <section key={part.title}>
           <h3
@@ -116,6 +118,54 @@ export function PatternToc({
           </ol>
         </section>
       ))}
+    </div>
+  );
+}
+
+/** Chamada no topo do sumário: convida a criar conta ou mostra o progresso de quem já tem. */
+function TrackBanner() {
+  const { data: me, isPending } = useMe();
+  const { byPattern } = useStatuses(!!me);
+  if (isPending) return null;
+
+  if (!me) {
+    return (
+      <div className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-medium">Crie sua conta e comece a trilha</p>
+          <p className="mt-1 text-sm text-muted">
+            Marque o que já resolveu, receba revisões no momento certo e acompanhe seu streak. É
+            gratuito.
+          </p>
+        </div>
+        <div className="flex shrink-0 items-center gap-3">
+          <Link to="/entrar" className="text-sm font-medium text-muted hover:text-text">
+            Entrar
+          </Link>
+          <ButtonLink to="/cadastro">Criar conta</ButtonLink>
+        </div>
+      </div>
+    );
+  }
+
+  const solved = [...byPattern.values()].reduce((sum, p) => sum + p.solved, 0);
+  return (
+    <div className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p className="font-medium">
+          {solved === 0
+            ? `Pronto para começar, ${me.displayName}?`
+            : `Você já resolveu ${solved} de ${PROBLEMS.length} problemas`}
+        </p>
+        <p className="mt-1 text-sm text-muted">
+          {solved === 0
+            ? 'Comece pelo primeiro padrão e marque seu progresso.'
+            : 'Continue de onde parou no seu painel.'}
+        </p>
+      </div>
+      <ButtonLink to={solved === 0 ? '/app/trilha/arrays-hashing' : '/app'} className="shrink-0">
+        {solved === 0 ? 'Começar a trilha' : 'Continuar a trilha'}
+      </ButtonLink>
     </div>
   );
 }
