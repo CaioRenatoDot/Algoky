@@ -1,0 +1,24 @@
+# Uso: cp .env.example .env && docker compose up -d --build
+services:
+  algoky:
+    build: .
+    image: algoky:latest
+    container_name: algoky
+    restart: unless-stopped
+    ports:
+      - '${PORT:-3333}:3333'
+    environment:
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-true}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      AUTH_RATE_LIMIT: ${AUTH_RATE_LIMIT:-20}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    volumes:
+      - algoky-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  algoky-data:
