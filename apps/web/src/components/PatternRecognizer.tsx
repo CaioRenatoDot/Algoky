@@ -113,7 +113,11 @@ export function PatternRecognizer() {
         </div>
       </div>
       <div className="px-5 py-6 sm:px-6">
-        <p className="min-h-[5.5rem] text-lg leading-relaxed sm:text-xl" aria-live="polite">
+        <p
+          key={index}
+          className="min-h-[5.5rem] animate-swap text-lg leading-relaxed sm:text-xl"
+          aria-live="polite"
+        >
           “<Statement text={example.text} reveal={reveal} />”
         </p>
         <div
@@ -124,7 +128,9 @@ export function PatternRecognizer() {
         >
           <div className="min-w-0">
             <p className="text-xs text-muted">Padrão</p>
-            <p className="truncate font-semibold">{pattern.name}</p>
+            <p key={index} className="animate-fade-up truncate font-semibold">
+              {pattern.name}
+            </p>
           </div>
           <Link
             to={`/padroes/${pattern.id}`}
